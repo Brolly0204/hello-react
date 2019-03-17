@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import TodoAdd from './TodoAdd'
-import TodoList from './TodoList'
-import TodoFooter from './TodoFooter'
+import TodoAddContainer from './TodoAddContainer'
+import TodoListContainer from './TodoListContainer'
+import TodoFooterContainer from './TodoFooterContainer'
 
 export default class Todo extends Component {
   constructor(props) {
@@ -17,9 +17,9 @@ export default class Todo extends Component {
     const todos = this.filterTodos()
     return (
       <div>
-        <TodoAdd addTodo={this.addTodo} />
-        <TodoList todos={todos} toggleTodo={this.toggleTodo} />
-        <TodoFooter filter={filter} toggleFilter={this.toggleFilter} />
+        <TodoAddContainer addTodo={this.addTodo} />
+        <TodoListContainer todos={todos} toggleTodo={this.toggleTodo} />
+        <TodoFooterContainer filter={filter} toggleFilter={this.toggleFilter} />
       </div>
     )
   }
