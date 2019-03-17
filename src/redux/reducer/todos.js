@@ -1,10 +1,41 @@
-import { ADD_TODO, TOGGLE_TODO } from '../actions/actionType'
+import * as types from '../actions/actionType'
 
-const initState = []
+const initState = {
+  isFetching: false,
+  error: null,
+  data: []
+}
 
-const todos = (state = initState, action) => {
+const reducer = (state = initState, action) => {
+  switch(action.type) {
+    case types.FETCH_TODO_REQUEST:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case types.FETCH_TODO_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        data: action.data
+      }
+    case types.FETCH_TODO_FAIL:
+      return {
+        ...state,
+        isFetching: false,
+        error: action.error
+      }
+    default:
+      return {
+        ...state,
+        data: todos(state.data, action)
+      } 
+  }
+}
+
+const todos = (state = [], action) => {
   switch (action.type) {
-    case ADD_TODO:
+    case types.ADD_TODO:
       return [
         ...state,
         {
@@ -12,7 +43,7 @@ const todos = (state = initState, action) => {
           completed: false
         }
       ]
-    case TOGGLE_TODO:
+    case types.TOGGLE_TODO:
       return [
         ...state.map(todo => {
           todo.id === action.id && (todo.completed = !todo.completed)
@@ -24,4 +55,4 @@ const todos = (state = initState, action) => {
   }
 }
 
-export default todos
+export default reducer
